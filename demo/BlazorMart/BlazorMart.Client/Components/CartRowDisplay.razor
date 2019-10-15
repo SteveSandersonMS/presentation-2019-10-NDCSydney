@@ -1,0 +1,31 @@
+﻿@if (Data.Product == null)
+{
+    <div class="cart-item">
+        <img src="loading.gif" />
+        <div class="info">
+            <h3>Loading...</h3>
+            <p>@Data.EAN</p>
+        </div>
+        <div class="item-summary">
+            <div class="quantity">Quantity: <strong>@Data.Quantity</strong></div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="cart-item yellow-flash">
+        <img src="@($"{Startup.BackendUrl}/product-images/{Data.Product.ImageUrl}")" />
+        <div class="info">
+            <h3>@Data.Product.Name</h3>
+            <p>@Data.Product.Description</p>
+        </div>
+        <div class="item-summary">
+            <div class="price">@((Data.Product.Price / 100.0).ToString("c"))</div>
+            <div class="quantity">Quantity: <strong>@Data.Quantity</strong></div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public CartRow Data { get; set; }
+}

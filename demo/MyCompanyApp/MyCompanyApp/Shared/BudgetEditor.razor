@@ -1,0 +1,27 @@
+﻿<div class="budget">
+    @foreach (var item in Items)
+    {
+        <span>@item.Name:</span>
+        <span>@item.Amount.ToString("c0")</span>
+        <input type="range" step="@Step" max="@Potential(item)"
+               @bind="item.Amount" @bind:event="oninput" @onchange="() => RemainingChanged.InvokeAsync(RemainingComputed)"
+               style="width: @(100 * Potential(item) / TotalBudget)%" />
+    }
+
+    <span>Remaining:</span>
+    <strong>@RemainingComputed.ToString("c0")</strong>
+</div>
+
+@code {
+    [Parameter] public IEnumerable<BudgetItem> Items { get; set; }
+    [Parameter] public decimal TotalBudget { get; set; }
+    [Parameter] public decimal Step { get; set; } = 10000;
+    [Parameter] public decimal Remaining { get; set; }
+    [Parameter] public EventCallback<decimal> RemainingChanged { get; set; }
+
+    decimal RemainingComputed => TotalBudget - Items.Sum(l => l.Amount);
+    decimal Potential(BudgetItem item) => item.Amount + RemainingComputed;
+
+    protected override Task OnInitializedAsync()
+        => RemainingChanged.InvokeAsync(RemainingComputed);
+}

@@ -1,0 +1,31 @@
+﻿@page "/bonus"
+
+<h3>Bonus splitter</h3>
+
+<div class="budget">
+    @foreach (var item in budgetItems)
+    {
+        <span>@item.Name:</span>
+        <span>@item.Amount.ToString("c0")</span>
+        <input type="range" max="@(item.Amount + Remaining)" step="1000"
+               @bind="item.Amount" @bind:event="oninput"
+               style="width: @(100 * (item.Amount + Remaining) / totalBudget)%" />
+    }
+    <span>Remaining:</span>
+    <span>@Remaining.ToString("c0")</span>
+</div>
+
+<button disabled="@(Remaining > 0)">Save</button>
+
+@code {
+    decimal totalBudget = 1000000;
+
+    decimal Remaining => totalBudget - budgetItems.Sum(x => x.Amount);
+
+    List<BudgetItem> budgetItems = new List<BudgetItem>
+    {
+        new BudgetItem { Name = "Developers" },
+        new BudgetItem { Name = "Managers" },
+        new BudgetItem { Name = "Sales" },
+    };
+}

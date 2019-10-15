@@ -1,0 +1,9 @@
+﻿<div class="overlay">
+    <div class="content">
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

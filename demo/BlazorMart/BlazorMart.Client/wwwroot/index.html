@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>BlazorMart</title>
+    <base href="/" />
+    <link rel="stylesheet" href="style/styles.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <img class="logo" src="logo.svg" />
+    <app></app>
+
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="keyboard.js"></script>
+    <script>
+        navigator.serviceWorker.register('service-worker.js');
+    </script>
+</body>
+</html>

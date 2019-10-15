@@ -1,0 +1,51 @@
+﻿@inject Cart Cart
+
+<header>
+    <SearchBox OnItemChosen="HandleItemChosen" />
+</header>
+
+<main>
+    @foreach (var row in Cart.Rows)
+    {
+        <CartRowDisplay @key="row.Key" Data="row" />
+    }
+</main>
+
+@if (Cart.HasAnyProducts)
+{
+    <footer>
+        <button class="remove-item" @onclick="EnterRemoveMode">✗ Remove item</button>
+        <div>Total: <span class="price">@Cart.GrandTotal.ToString("c")</span></div>
+        <button>💳 Checkout</button>
+    </footer>
+}
+
+@if (isInRemoveMode)
+{
+    <Overlay>
+        <p>Scan an item to remove</p>
+        <button @onclick="@(() => { isInRemoveMode = false; })">Cancel</button>
+    </Overlay>
+}
+
+@code {
+    bool isInRemoveMode;
+
+    void EnterRemoveMode()
+    {
+        isInRemoveMode = true;
+    }
+
+    async Task HandleItemChosen(string ean)
+    {
+        if (isInRemoveMode)
+        {
+            Cart.RemoveItem(ean);
+            isInRemoveMode = false;
+        }
+        else
+        {
+            await Cart.AddItemAsync(ean);
+        }
+    }
+}

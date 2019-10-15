@@ -1,0 +1,48 @@
+﻿@inject Inventory.InventoryClient InventoryClient
+
+<div class="search">
+    <form @onsubmit="AddItem">
+        <input type="search" placeholder="Scan or search" list="products-autocomplete"
+               value="@searchText" @oninput="UpdateAutocomplete" />
+    </form>
+    <datalist id="products-autocomplete">
+        @foreach (var item in autocompleteItems)
+        {
+            <option>@item.Name</option>
+        }
+    </datalist>
+</div>
+
+@code {
+    string searchText;
+    List<AutocompleteItem> autocompleteItems = new List<AutocompleteItem>();
+
+    [Parameter] public EventCallback<string> OnItemChosen { get; set; }
+
+    async Task AddItem()
+    {
+        var ean = searchText.ToLower();
+        searchText = null;
+        autocompleteItems.Clear();
+        await OnItemChosen.InvokeAsync(ean);
+    }
+
+    async Task UpdateAutocomplete(ChangeEventArgs eventArgs)
+    {
+        searchText = (string)eventArgs.Value;
+        var matchingItem = autocompleteItems.FirstOrDefault(i => i.Name == searchText);
+        if (matchingItem != null)
+        {
+            // They selected an item from the list. Treat as a form submission.
+            searchText = matchingItem.EAN;
+            await AddItem();
+        }
+        else
+        {
+            // Update autocomplete
+            var request = new AutocompleteRequest { SearchQuery = searchText };
+            var reply = await InventoryClient.AutocompleteAsync(request);
+            autocompleteItems = reply.Items.ToList();
+        }
+    }
+}

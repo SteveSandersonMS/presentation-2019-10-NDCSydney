@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option csharp_namespace = "BlazorMart.Server";
+
+package Inventory;
+
+service Inventory {
+  rpc Autocomplete (AutocompleteRequest) returns (AutocompleteReply);
+  rpc ProductDetails (ProductDetailsRequest) returns (ProductDetailsResponse);
+}
+
+message AutocompleteRequest {
+  string searchQuery = 1;
+}
+
+message AutocompleteReply {
+  repeated AutocompleteItem items = 1;
+}
+
+message AutocompleteItem {
+    string EAN = 1;
+    string name = 2;
+}
+
+message Product {
+	string EAN = 1;
+	string name = 2;
+	int32 price = 3;
+	string description = 4;
+	string imageUrl = 5;
+}
+
+message ProductDetailsRequest {
+	string EAN = 1;
+}
+
+message ProductDetailsResponse {
+	Product Product = 1;
+}
