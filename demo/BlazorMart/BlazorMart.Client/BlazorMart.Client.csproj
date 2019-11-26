@@ -8,6 +8,9 @@
     
     <!-- Because the linker doesn't yet work with netstandard2.1 -->
     <BlazorLinkOnBuild>false</BlazorLinkOnBuild>
+
+    <InventoryProtoPath>..\BlazorMart.Server\Protos\inventory.proto</InventoryProtoPath>
+    <InventoryProtoPath Condition="!Exists('$(InventoryProtoPath)')">inventory.proto</InventoryProtoPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\BlazorMart.Server\Protos\inventory.proto" GrpcServices="Client" />
+    <Protobuf Include="$(InventoryProtoPath)" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

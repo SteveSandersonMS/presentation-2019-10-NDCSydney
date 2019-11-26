@@ -8,7 +8,7 @@ namespace BlazorMart.Client
 {
     public class Startup
     {
-        public const string BackendUrl = "https://localhost:5001";
+        public const string BackendUrl = "https://localhost:8001";
 
         public void ConfigureServices(IServiceCollection services)
         {

@@ -4,3 +4,4 @@ bin/
 *.user
 node_modules/
 .DS_Store
+demo/BlazorMart/BlazorMart.Client/inventory.proto
