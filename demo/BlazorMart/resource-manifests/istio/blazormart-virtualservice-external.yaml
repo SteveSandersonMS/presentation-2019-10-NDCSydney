@@ -12,8 +12,25 @@ spec:
   - match:
     - uri:
         regex: '.*'
+    #match:
+    #- port: 443
+    #  sni_hosts:
+    #  - "*"
     route:
     - destination:
-        host: blazormart-frontend
-        port:
-          number: 80
+        host: blazormart-backend
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: blazormart-backend-destination
+spec:
+  host: blazormart-backend
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+    portLevelSettings:
+    - port:
+        number: 443
+      tls:
+        mode: SIMPLE
