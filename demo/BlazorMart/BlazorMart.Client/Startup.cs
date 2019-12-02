@@ -8,13 +8,11 @@ namespace BlazorMart.Client
 {
     public class Startup
     {
-        public const string BackendUrl = "http://localhost";
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped(serviceProvider =>
             {
-                var httpClient = new HttpClient { BaseAddress = new Uri(BackendUrl) };
+                var httpClient = serviceProvider.GetRequiredService<HttpClient>();
                 return new Inventory.InventoryClient(new GrpcWebCallInvoker(httpClient));
             });
 
