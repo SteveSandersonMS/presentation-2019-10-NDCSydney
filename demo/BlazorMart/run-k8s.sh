@@ -1,10 +1,6 @@
 ./build-images.sh
 kubectl delete -f resource-manifests
-
-kubectl apply -f resource-manifests/filter.yaml
-kubectl apply -f resource-manifests/backend.yaml
-kubectl apply -f resource-manifests/frontend.yaml
-kubectl apply -f resource-manifests/gateway.yaml
+kubectl apply -f resource-manifests
 
 export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
 export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
