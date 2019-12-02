@@ -1,5 +1,7 @@
-# You can only run this once the following starts showing that the Mongo container is ready
-# TODO: Figure out how to get the Mongo instance to store data in the persistent volume so it's not lost when redeploying
+# You only need to run this script once. After you've done so, the Mongo DB data will be stored in
+# the "mongodb-persistent-storage" persistent volume and doesn't need to be reconstructed.
+
+# Note: You can only run this once the following starts showing that the Mongo container is ready:
 kubectl get all
 
 # Initialize replication set

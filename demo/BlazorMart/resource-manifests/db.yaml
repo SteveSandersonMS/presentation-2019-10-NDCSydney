@@ -46,7 +46,6 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: mongod-container
-          #image: pkdone/mongo-ent:3.4
           image: mongo
           command:
             - "numactl"
@@ -64,9 +63,12 @@ spec:
               memory: 200Mi
           ports:
             - containerPort: 27017
+          volumeMounts:
+          - name: mongodb-persistent-storage
+            mountPath: /data/db
   volumeClaimTemplates:
   - metadata:
-      name: mongodb-persistent-storage-claim
+      name: mongodb-persistent-storage
       annotations:
         volume.beta.kubernetes.io/storage-class: "standard"
     spec:
