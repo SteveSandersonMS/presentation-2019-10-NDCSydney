@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Knowit.Grpc.Web;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +18,6 @@ namespace BlazorMart.Server
         {
             services.AddCors();
             services.AddGrpc();
-            services.AddGrpcWeb();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,7 +31,6 @@ namespace BlazorMart.Server
             app.UseStaticFiles();
 
             app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            app.UseGrpcWeb();
 
             app.UseRouting();
 

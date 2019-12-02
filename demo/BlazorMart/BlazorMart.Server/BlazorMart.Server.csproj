@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="0.2.23-pre2" />
-    <PackageReference Include="Knowit.Grpc.Web" Version="0.9.20" />
   </ItemGroup>
 
 </Project>

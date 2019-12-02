@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: grpc-web-filter
+spec:
+  workloadLabels:
+    app: blazormart-backend
+  filters:
+  - listenerMatch:
+      listenerType: SIDECAR_INBOUND
+      listenerProtocol: HTTP
+    insertPosition:
+      index: FIRST
+    filterType: HTTP
+    filterName: "envoy.grpc_web"
+    filterConfig: {}
