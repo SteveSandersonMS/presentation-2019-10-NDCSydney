@@ -48,8 +48,6 @@ spec:
         - name: mongod-container
           image: mongo
           command:
-            - "numactl"
-            - "--interleave=all"
             - "mongod"
             - "--wiredTigerCacheSizeGB"
             - "0.1"
@@ -64,13 +62,11 @@ spec:
           ports:
             - containerPort: 27017
           volumeMounts:
-          - name: mongodb-persistent-storage
+          - name: mongod-pv
             mountPath: /data/db
   volumeClaimTemplates:
   - metadata:
-      name: mongodb-persistent-storage
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "standard"
+      name: mongod-pv
     spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:

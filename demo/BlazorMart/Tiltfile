@@ -1,0 +1,13 @@
+print('Hello Tiltfile')
+k8s_yaml('resource-manifests/filter.yaml')
+k8s_yaml('resource-manifests/frontend.yaml')
+k8s_yaml('resource-manifests/backend.yaml')
+k8s_yaml('resource-manifests/db.yaml')
+k8s_yaml('resource-manifests/gateway.yaml')
+docker_build('blazormart-client', './BlazorMart.Client',
+    live_update=[
+        sync('BlazorMart.Client/wwwroot', '/var/www'),
+        sync('BlazorMart.Client/bin/Debug/netstandard2.1/dist', '/var/www/_framework'),
+    ]
+)
+docker_build('blazormart-server', 'BlazorMart.Server')
