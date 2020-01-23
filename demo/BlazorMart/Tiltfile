@@ -1,3 +1,4 @@
+allow_k8s_contexts('default')
 print('Hello Tiltfile')
 k8s_yaml('resource-manifests/filter.yaml')
 k8s_yaml('resource-manifests/frontend.yaml')
